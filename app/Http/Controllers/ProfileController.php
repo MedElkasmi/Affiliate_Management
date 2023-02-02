@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -16,7 +18,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('admin.profile.edit', [
             'user' => $request->user(),
         ]);
     }
@@ -56,5 +58,29 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function store(Request $request) {
+
+        $id = Auth::user()->id;
+        $data = User::find($id);
+
+        if($request->file('profile_name')) {
+
+           $file = $request->file('profile_name');
+           
+           $filename = str::random(12).$file->getClientOriginalName();
+           $file->move(public_path('upload/profile_images'),$filename);
+           $data['profile_image'] = $filename;
+        }
+
+        $data->save();
+
+        $notification = array(
+            'message' => 'Admin Profile Image Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('profile.edit')->with($notification);
     }
 }
