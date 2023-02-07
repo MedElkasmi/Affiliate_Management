@@ -22,6 +22,10 @@
       <link href="{{ asset('backend/assets/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('backend/assets/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+      <!-- Dropzone.js -->
+      <link href="{{ asset('backend/assets/vendors/dropzone/dist/min/dropzone.min.css')}}" rel="stylesheet">
+
+
       <!-- Datatables -->
       <link href="{{ asset('backend/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
       <link href="{{ asset('backend/assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
@@ -88,6 +92,12 @@
       <script src="{{ asset('backend/assets/vendors/echarts/dist/echarts.min.js')}}"></script>
       <script src="{{ asset('backend/assets/vendors/echarts/map/js/world.js')}}"></script>
 
+      <!-- jQuery Tags Input -->
+      <script src="{{ asset('backend/assets/vendors/jquery.tagsinput/src/jquery.tagsinput.js')}}"></script>
+
+      <!-- Dropzone.js -->
+      <script src="{{ asset('backend/assets/vendors/dropzone/dist/min/dropzone.min.js')}}"></script>
+
       <!-- bootstrap-daterangepicker -->
       <script src="{{ asset('backend/assets/vendors/moment/min/moment.min.js')}}"></script>
       <script src="{{ asset('backend/assets/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
@@ -108,5 +118,8 @@
       <script src="{{ asset('backend/assets/vendors/pdfmake/build/vfs_fonts.j')}}s"></script>
       <!-- Custom Theme Scripts -->
       <script src="{{ asset('backend/assets/build/js/custom.min.js')}}"></script>
+
+
+
    </body>
 </html>

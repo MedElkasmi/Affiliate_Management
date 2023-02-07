@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->string('SID');
-            $table->string('OfferName');
-            $table->string('Description');
-            $table->string('Payout');
-            $table->string('Type');
+            $table->string('sid');
+            $table->string('offer');
+            $table->longtext('redlink')->nullable();
+            $table->longtext('unsublink')->nullable();
+            $table->string('description');
+            $table->string('payout');
+            $table->string('type');
             $table->unsignedBigInteger('vertical_id');
             $table->unsignedBigInteger('network_id');
             $table->foreign('vertical_id')->references('id')->on('verticals');

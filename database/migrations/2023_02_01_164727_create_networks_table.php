@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('networks', function (Blueprint $table) {
             $table->id();
-            $table->string('NetworkID');
-            $table->string('NetworkName');
-            $table->string('Network_URL');
-            $table->string('UserName');
+            $table->string('networkID');
+            $table->string('network');
+            $table->string('urlpath');
+            $table->string('username');
             $table->string('password');
-            $table->longtext('API_Key');
+            $table->longtext('apikey');
             $table->timestamps();
         });
     }
