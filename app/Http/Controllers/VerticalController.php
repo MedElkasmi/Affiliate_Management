@@ -12,9 +12,16 @@ class VerticalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $verticals = Vertical::all();
+
+        return view('admin.verticals.index', [
+            'user' => $request->user(),
+            'verticals' => $verticals
+        ]);
     }
 
     /**
@@ -22,9 +29,12 @@ class VerticalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        return view('admin.verticals.create', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**
@@ -36,6 +46,22 @@ class VerticalController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'vertical' => 'required',
+        ]);
+
+        $data = new Vertical;
+
+        $data->vertical = $request->vertical;
+
+        $data->save();
+
+        $notification = array(
+            'message' => 'New vertical Has been Added',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('vertical.create')->with($notification);
     }
 
     /**

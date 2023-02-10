@@ -22,9 +22,12 @@ class FromController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        return view('admin.offers.froms.create', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**

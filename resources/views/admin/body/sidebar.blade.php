@@ -27,23 +27,23 @@
           <ul class="nav side-menu">
             <li><a><i class="fa fa-cloud"></i>Offers<span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
-                <li><a href="{{route('offer.create')}}">Add new</a></li>
+                <li><a href="{{route('offer.create')}}">Add Offer</a></li>
               </ul>
             </li>
           </ul>
           <ul class="nav side-menu">
             <li><a><i class="fa fa-users"></i>Sponsors<span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
-                <li><a href="{{route('offer.create')}}">Add new</a></li>
-                <li><a href="{{route('offer.create')}}">Api Key</a></li>
+                <li><a href="{{route('network.create')}}">Add New Network</a></li>
+                <li><a href="{{route('network.index')}}">List Of Networks</a></li>
               </ul>
             </li>
           </ul>
           <ul class="nav side-menu">
             <li><a><i class="fa fa-cubes"></i>Verticals<span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
-                <li><a href="{{route('offer.create')}}">Add new</a></li>
-                <li><a href="{{route('offer.create')}}">Vertical List</a></li>
+                <li><a href="{{route('vertical.create')}}">Add New Vertical</a></li>
+                <li><a href="{{route('vertical.index')}}">List Of Verticals</a></li>
               </ul>
             </li>
           </ul>
