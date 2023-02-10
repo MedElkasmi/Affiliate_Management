@@ -24,6 +24,7 @@
       <link href="{{ asset('backend/assets/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
       <!-- Dropzone.js -->
       <link href="{{ asset('backend/assets/vendors/dropzone/dist/min/dropzone.min.css')}}" rel="stylesheet">
+      
 
 
       <!-- Datatables -->
@@ -34,6 +35,8 @@
       <link href="{{ asset('backend/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
       <!-- Custom Theme Style -->
       <link href="{{ asset('backend/assets/build/css/custom.min.css')}}" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
    </head>
    <body class="nav-md">
       <div class="container body">
@@ -98,6 +101,8 @@
       <!-- Dropzone.js -->
       <script src="{{ asset('backend/assets/vendors/dropzone/dist/min/dropzone.min.js')}}"></script>
 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
       <!-- bootstrap-daterangepicker -->
       <script src="{{ asset('backend/assets/vendors/moment/min/moment.min.js')}}"></script>
       <script src="{{ asset('backend/assets/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
@@ -118,6 +123,34 @@
       <script src="{{ asset('backend/assets/vendors/pdfmake/build/vfs_fonts.j')}}s"></script>
       <!-- Custom Theme Scripts -->
       <script src="{{ asset('backend/assets/build/js/custom.min.js')}}"></script>
+
+      <script>
+         @if(Session::has('message'))
+         var type = "{{ Session::get('alert-type','info') }}"
+         switch(type){
+            case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+            case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+            case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+            case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break; 
+         }
+         @endif 
+         $(document).ready(function() {
+             $('.js-example-basic-multiple').select2({ tags: true });
+          });
+          $(document).ready(function() {
+          $('#summernote').summernote({
+                height: 300
+          });
+       });
+        </script>
 
 
 

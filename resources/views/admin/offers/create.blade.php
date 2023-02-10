@@ -1,10 +1,10 @@
 @extends('admin.master')
 @section('content')
 <div class="row">
-   <div class="col-md-12 col-sm-12  ">
+   <div class="col-md-12 col-sm-12">
       <div class="x_panel">
          <div class="x_title">
-            <h2><i class="fa fa-bars"></i> Tabs <small>Float left</small></h2>
+            <h2><i class="fa fa-bars"></i> Campaign Info</h2>
             <ul class="nav navbar-right panel_toolbox">
                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                </li>
@@ -23,10 +23,10 @@
          <div class="x_content">
             <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                <li class="nav-item">
-                  <a class="nav-link active" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="new" aria-selected="true">New Offer</a>
+                  <a class="nav-link active" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="new" aria-selected="true">Offers Details</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" id="offers-tab" data-toggle="tab" href="#offers" role="tab" aria-controls="offers" aria-selected="true">Offers Details</a>
+                  <a class="nav-link" id="offers-tab" data-toggle="tab" href="#offers" role="tab" aria-controls="offers" aria-selected="true">Tracking</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" id="subjects-tab" data-toggle="tab" href="#subjects" role="tab" aria-controls="subjects" aria-selected="false">Subjects</a>
@@ -64,57 +64,59 @@
                            </div>
                            <div class="x_content">
                               <br />
-                              <form>
+                              <form method="post" action="{{ route('offer.store') }}">
+                                 @csrf
+
                                  <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Offer Name</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <input type="text"required="required" class="form-control">
+                                       <input type="text" required="required" name="offer" class="form-control">
                                     </div>
                                  </div>
                                  <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Offer ID</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <input type="text" required="required" class="form-control">
+                                       <input type="text" required="required" name="sid" class="form-control">
                                     </div>
                                  </div>
                                  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 label-align">Select Network</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <select class="form-control">
-                                          <option>Network1</option>
-                                          <option>Network2</option>
-                                          <option>Network3</option>
-                                          <option>Network4</option>
+                                       <select class="form-control" name="network_id">
+                                          <option disabled selected hidden>Select your option</option>
+                                          @foreach ($networks as $network)
+                                             <option value="{{ $network->id }}">{{ $network->network }}</option>
+                                          @endforeach
                                        </select>
                                     </div>
                                  </div>
                                  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 label-align">Descripton / Restriction</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <textarea class="form-control" rows="3"></textarea>
+                                       <textarea class="form-control" rows="3" name="description"></textarea>
                                     </div>
                                  </div>
                                  <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Payout</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <input type="text"required="required" class="form-control">
+                                       <input type="text"required="required" class="form-control" name="payout">
                                     </div>
                                  </div>
                                  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 label-align">Select Vertical</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <select class="form-control">
-                                          <option>Vertical1</option>
-                                          <option>Vertical1</option>
-                                          <option>Vertical1</option>
-                                          <option>Vertical1</option>
+                                       <select class="form-control" name="vertical_id">
+                                          <option disabled selected hidden>Select your option</option>
+                                          @foreach ($verticals as $vertical)
+                                             <option value="{{ $vertical->id }}">{{ $vertical->vertical }}</option>
+                                        @endforeach
                                        </select>
                                     </div>
                                  </div>
                                  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 label-align">GEOs</label>
                                     <div class="col-md-6 col-sm-6">
-                                       <input id="tags_1" type="text" class="tags form-control" />
+                                       <input id="tags_1" type="text" class="tags form-control" name="geos[]"/>
                                        <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
                                     </div>
                                  </div>
@@ -122,19 +124,9 @@
                                     <label class="control-label col-md-3 col-sm-3 label-align">Offer Type</label>
                                     <div class="col-md-6 col-sm-6">
                                        <div class="radio">
-                                          <label>
-                                          <input type="radio" class="flat" checked name="iCheck"> CPA
-                                          </label>
-                                       </div>
-                                       <div class="radio">
-                                          <label>
-                                          <input type="radio" class="flat" name="iCheck"> CPL
-                                          </label>
-                                       </div>
-                                       <div class="radio">
-                                          <label>
-                                          <input type="radio" class="flat" name="iCheck"> RevShare
-                                          </label>
+                                          <label><input type="radio" class="flat" name="type" value="CPA"> CPA</label>
+                                          <label><input type="radio" class="flat" name="type" value="CPL"> CPL</label>
+                                          <label><input type="radio" class="flat" name="type" value="RevShare"> RevShare</label>
                                        </div>
                                     </div>
                                  </div>
@@ -156,7 +148,7 @@
                      <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                            <div class="x_title">
-                              <h2>Create New Offer</h2>
+                              <h2>Tracking Links</h2>
                               <ul class="nav navbar-right panel_toolbox">
                                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                  </li>
@@ -184,25 +176,10 @@
                                     <input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /> 
                                     </label>
                                     <div class="col-md-4 col-sm-4">
-                                       <input type="text" name="name" required="required" class="form-control">
+                                       <input type="text" name="name" required="required" class="form-control" placeholder="Redirect Link">
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                       <input type="text" name="name" required="required" class="form-control">
-                                    </div>
-                                    <label class="col-md-2 col-sm-2" style="margin-top:10px;">
-                                    <a href=""><i class="fa fa-share"></i></a>
-                                    </label>
-                                 </div>
-                                 <div class="item form-group">
-                                    <label class="col-md-2 col-sm-2" style="margin-top:7px;">
-                                    Team 1
-                                    <input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /> 
-                                    </label>
-                                    <div class="col-md-4 col-sm-4">
-                                       <input type="text" name="name" required="required" class="form-control">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4">
-                                       <input type="text" name="name" required="required" class="form-control">
+                                       <input type="text" name="name" required="required" class="form-control" placeholder="Unsubscribe Link">
                                     </div>
                                     <label class="col-md-2 col-sm-2" style="margin-top:10px;">
                                     <a href=""><i class="fa fa-share"></i></a>
@@ -214,10 +191,25 @@
                                     <input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /> 
                                     </label>
                                     <div class="col-md-4 col-sm-4">
-                                       <input type="text" name="name" required="required" class="form-control">
+                                       <input type="text" name="name" required="required" class="form-control" placeholder="Redirect Link">
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                       <input type="text" name="name" required="required" class="form-control">
+                                       <input type="text" name="name" required="required" class="form-control" placeholder="Unsubscribe Link">
+                                    </div>
+                                    <label class="col-md-2 col-sm-2" style="margin-top:10px;">
+                                    <a href=""><i class="fa fa-share"></i></a>
+                                    </label>
+                                 </div>
+                                 <div class="item form-group">
+                                    <label class="col-md-2 col-sm-2" style="margin-top:7px;">
+                                    Team 1
+                                    <input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /> 
+                                    </label>
+                                    <div class="col-md-4 col-sm-4">
+                                       <input type="text" name="name" required="required" class="form-control" placeholder="Redirect Link">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                       <input type="text" name="name" required="required" class="form-control" placeholder="Unsubscribe Link">
                                     </div>
                                     <label class="col-md-2 col-sm-2" style="margin-top:10px;">
                                     <a href=""><i class="fa fa-share"></i></a>
@@ -236,17 +228,19 @@
                   </div>
                </div>
                <div class="tab-pane fade" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
-                  @include('admin.offers.subjects.create')
+                  @include('admin.offers.subjects.index')
                </div>
                <div class="tab-pane fade" id="froms" role="tabpanel" aria-labelledby="froms-tab">
-                  @include('admin.offers.froms.create')
+                  @include('admin.offers.froms.index')
                </div>
                <div class="tab-pane fade" id="creatives" role="tabpanel" aria-labelledby="creatives-tab">
-                  @include('admin.offers.creatives.create')
+                  @include('admin.offers.creatives.index')
                </div>
             </div>
          </div>
       </div>
    </div>
 </div>
+
+ 
 @endsection

@@ -3,6 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\VerticalController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\FromController;
+use App\Http\Controllers\CreativeController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +34,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/offer/create', [OfferController::class, 'create'])->name('offer.create');
+    Route::resource('offer', OfferController::class);
+    Route::resource('network', NetworkController::class);
+    Route::resource('vertical', VerticalController::class);
+    Route::resource('subject', SubjectController::class);
+    Route::resource('from', FromController::class);
+    Route::resource('creative', CreativeController::class);
+    Route::resource('team', TeamController::class);
 });
 
 require __DIR__.'/auth.php';

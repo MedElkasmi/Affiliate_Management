@@ -1,7 +1,9 @@
+@extends('admin.master')
+@section('content')
 <div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-bars"></i> Update Profile Detais </h2>
+            <h2><i class="fa fa-bars"></i> Create New Vertical </h2>
             <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
@@ -19,32 +21,15 @@
         </div>
         <div class="x_content">
             <br />
-            <form method="post" action="{{ route('profile.update') }}">
+            <form method="post" action="{{ route('vertical.store') }}">
                 @csrf
-                @method('patch')
                 
                 <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align">Full Name 
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">Vertical
                         <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 ">
-                        <input type="text" name="name" required="required" class="form-control">
-                    </div>
-                </div>
-                <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align">Email 
-                        <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 ">
-                        <input type="email" name="email" required="required" class="form-control">
-                    </div>
-                </div>
-                <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align">Retype Email
-                        <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 ">
-                        <input type="email" name="re-email" class="form-control">
+                        <input type="text" name="vertical" required="required" class="form-control">
                     </div>
                 </div>
                 <div class="ln_solid"></div>
@@ -58,3 +43,4 @@
         </div>
     </div>
 </div>
+@endsection

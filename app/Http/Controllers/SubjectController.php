@@ -12,7 +12,7 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
     }
@@ -22,9 +22,12 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        return view('admin.offers.subjects.create', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**

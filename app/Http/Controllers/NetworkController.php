@@ -12,9 +12,16 @@ class NetworkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $networks = Network::all();
+
+        return view('admin.networks.index', [
+            'user' => $request->user(),
+            'networks' => $networks
+        ]);
     }
 
     /**
@@ -22,9 +29,12 @@ class NetworkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        return view('admin.networks.create', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**
@@ -36,6 +46,32 @@ class NetworkController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'networkID' => 'required',
+            'network' => 'required',
+            'urlpath' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'apikey' => 'required',
+        ]);
+
+        $data = new Network;
+
+        $data->networkID = $request->networkID;
+        $data->network = $request->network;
+        $data->urlpath = $request->urlpath;
+        $data->username = $request->username;
+        $data->password = $request->password;
+        $data->apikey = $request->apikey;
+
+        $data->save();
+
+        $notification = array(
+            'message' => 'New Network Has been Added',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('network.create')->with($notification);
     }
 
     /**
