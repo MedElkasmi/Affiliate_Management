@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('verticals', function (Blueprint $table) {
             $table->id();
-            $table->string('VerticalName');
+            $table->string('vertical');
             $table->timestamps();
         });
     }

@@ -22,9 +22,12 @@ class OfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        return view('admin.offers.create', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**

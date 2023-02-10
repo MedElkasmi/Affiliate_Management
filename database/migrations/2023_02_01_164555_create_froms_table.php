@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('froms', function (Blueprint $table) {
             $table->id();
-            $table->longText('Froms');
+            $table->longText('froms');
             $table->unsignedBigInteger('offer_id');
             $table->foreign('offer_id')->references('id')->on('offers');
             $table->timestamps();
