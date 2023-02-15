@@ -16,4 +16,6 @@ class Creative extends Model
         
         return $this->belongsTo(Offer::class);
     }
+
+    
 }

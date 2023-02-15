@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Creative;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class CreativeController extends Controller
@@ -39,6 +40,40 @@ class CreativeController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->file('creative') && $request->file('footer')) {
+
+            $request->validate([
+                'creative_name' => 'required',
+                'creative' => 'required|image',
+                'footer' => 'required|image',
+            ]);
+
+            $data = new Creative;
+            $offer_id = session('offer');
+
+            $data->creative_name = $request->input('creative_name');
+            $data->offer_id = $offer_id;
+
+            $creative = $request->file('creative');
+            $footer = $request->file('footer');
+            
+            $creative_path = str::random(20).$creative->getClientOriginalName();
+            $creative->move(public_path('upload/creatives'),$creative_path);
+            $data->creative_image = $creative_path;
+
+            $footer_path = str::random(20).$footer->getClientOriginalName();
+            $footer->move(public_path('upload/footers'),$footer_path);
+            $data->creative_footer = $footer_path;
+        }
+
+        $data->save();
+
+        $notification = array(
+            'message' => 'Admin Profile Image Updated',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('profile.edit')->with($notification);
     }
 
     /**

@@ -35,18 +35,14 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              <td>1</td>
-                              <td>test</td>
-                              <td>01/01/2023 Architect</td>
-                              <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
-                           </tr>
-                           <tr>
-                             <td>1</td>
-                             <td>test</td>
-                             <td>01/01/2023 Architect</td>
-                             <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
-                          </tr>
+                           @foreach ($froms as $from)
+                              <tr>
+                                 <td>1</td>
+                                 <td>{{$from->froms}}</td>
+                                 <td>{{$from->created_at}}</td>
+                                 <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
+                              </tr>
+                           @endforeach
                         </tbody>
                      </table>
                    </div>

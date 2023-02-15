@@ -35,18 +35,14 @@
                             </tr>
                          </thead>
                          <tbody>
-                            <tr>
-                               <td>1</td>
-                               <td>test</td>
-                               <td>01/01/2023 Architect</td>
-                               <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
-                            </tr>
-                            <tr>
+                           @foreach ($subjects as $subject)
+                           <tr>
                               <td>1</td>
-                              <td>test</td>
-                              <td>01/01/2023 Architect</td>
+                              <td>{{$subject->subjects}}</td>
+                              <td>{{$subject->created_at}}</td>
                               <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
                            </tr>
+                           @endforeach
                          </tbody>
                       </table>
                    </div>

@@ -28,18 +28,9 @@
                <li class="nav-item">
                   <a class="nav-link" id="offers-tab" data-toggle="tab" href="#offers" role="tab" aria-controls="offers" aria-selected="true">Tracking</a>
                </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="subjects-tab" data-toggle="tab" href="#subjects" role="tab" aria-controls="subjects" aria-selected="false">Subjects</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="froms-tab" data-toggle="tab" href="#froms" role="tab" aria-controls="froms" aria-selected="false">Froms</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="creatives-tab" data-toggle="tab" href="#creatives" role="tab" aria-controls="creatives" aria-selected="false">Creatives</a>
-               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-               <div class="tab-pane fade  show active" id="new" role="tabpanel" aria-labelledby="new-tab">
+               <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
                   <div class="row">
                      <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
@@ -226,15 +217,6 @@
                         </div>
                      </div>
                   </div>
-               </div>
-               <div class="tab-pane fade" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
-                  @include('admin.offers.subjects.index')
-               </div>
-               <div class="tab-pane fade" id="froms" role="tabpanel" aria-labelledby="froms-tab">
-                  @include('admin.offers.froms.index')
-               </div>
-               <div class="tab-pane fade" id="creatives" role="tabpanel" aria-labelledby="creatives-tab">
-                  @include('admin.offers.creatives.index')
                </div>
             </div>
          </div>

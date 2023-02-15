@@ -4,7 +4,7 @@
    <div class="col-md-12 col-sm-12 ">
       <div class="x_panel">
          <div class="x_title">
-            <h2>List of Active Offers</h2>
+            <h2>List of Active Offer</h2>
             <ul class="nav navbar-right panel_toolbox">
                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                </li>
@@ -35,29 +35,31 @@
                               <th>Network</th>
                               <th>Vertical</th>
                               <th>Payout</th>
-                              <th>Added</th>
-                              <th>Expires</th>
+                              <th>Geo Location</th>
+                              <th>Type</th>
+                              <th>Created Date</th>
+                              <th>Visibility</th>
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              <td>Tiger</td>
-                              <td>Nixon</td>
-                              <td>System Architect</td>
-                              <td>Edinburgh</td>
-                              <td>61</td>
-                              <td>2011/04/25</td>
-                              <td>$320,800</td>
-                           </tr>
-                           <tr>
-                              <td>Garrett</td>
-                              <td>Winters</td>
-                              <td>Accountant</td>
-                              <td>Tokyo</td>
-                              <td>63</td>
-                              <td>2011/07/25</td>
-                              <td>$170,750</td>
-                           </tr>
+                           @foreach ($offers as $offer)
+                              @foreach ($offer->locations as $location)
+                              <tr>
+                                 <td>{{ $offer->sid }}</td>
+                                 <td><a href="{{route('offer.edit',['offer' => $offer])}}">{{ $offer->offer }}</a></td>
+                                 <td>{{ $offer->network->network }}</td>
+                                 <td>{{ $offer->vertical->vertical }}</td>
+                                 <td>{{ $offer->payout }}</td>
+                                 <td>{{ $location->geo }}</td>
+                                 <td>{{ $offer->type }}</td>
+                                 <td>{{ $offer->created_at }}</td>
+                                 <td><input type="checkbox" class="js-switch" checked /></td>
+                              </tr>
+                              @php
+                                  session(['offer' => $offer]);
+                              @endphp
+                              @endforeach
+                           @endforeach
                         </tbody>
                      </table>
                   </div>

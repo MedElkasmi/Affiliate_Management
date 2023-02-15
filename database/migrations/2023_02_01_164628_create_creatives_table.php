@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('creatives', function (Blueprint $table) {
             $table->id();
-            $table->string('creative');
-            $table->text('path');
+            $table->string('creative_name');
+            $table->text('creative_image');
+            $table->text('creative_footer');
             $table->unsignedBigInteger('offer_id');
             $table->foreign('offer_id')->references('id')->on('offers');
             $table->timestamps();

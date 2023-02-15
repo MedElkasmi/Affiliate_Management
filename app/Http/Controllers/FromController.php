@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\From;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class FromController extends Controller
@@ -39,6 +40,27 @@ class FromController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'froms' => 'required',
+        ]);
+
+        $offer_id = session('offer');
+        $froms = $validatedData['froms'];
+        $froms_list = explode("\n", $froms);
+
+        foreach($froms_list as $from ) {
+            $offerfrom = new From;
+            $offerfrom->offer_id = $offer_id;
+            $offerfrom->froms = $from;
+            $offerfrom->save();
+        }
+
+        $notification = array(
+            'message' => 'Froms Have been Added',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('from.create')->with($notification);
     }
 
     /**
