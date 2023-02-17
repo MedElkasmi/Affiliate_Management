@@ -11,6 +11,7 @@ use App\Models\Location;
 use App\Models\Creative;
 use App\Models\Network;
 use App\Models\Team;
+use App\Models\Link;
 
 class Offer extends Model
 {
@@ -31,6 +32,11 @@ class Offer extends Model
     public function locations(){
 
         return $this->hasMany(Location::class);
+    }
+
+    public function links(){
+
+        return $this->hasMany(Link::class);
     }
 
     public function creatives(){

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\From;
-use Illuminate\Support\Facades\DB;
+use App\Models\Link;
 use Illuminate\Http\Request;
 
-class FromController extends Controller
+class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +22,9 @@ class FromController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         //
-        return view('admin.offers.froms.create', [
-            'user' => $request->user(),
-        ]);
     }
 
     /**
@@ -41,22 +37,21 @@ class FromController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'froms' => 'required',
+            'redirect' => 'required|url|regex:/^https?:\/\//i',
+            'footer' => 'required|url|regex:/^https?:\/\//i',
+            'offer_id' => 'unique',
         ]);
 
         $offer_id = session('offer');
-        $froms = $validatedData['froms'];
-        $froms_list = explode("\n", $froms);
 
-        foreach($froms_list as $from ) {
-            $offerfrom = new From;
-            $offerfrom->offer_id = $offer_id;
-            $offerfrom->froms = $from;
-            $offerfrom->save();
-        }
+        Link::create([
+            'redirect' => $validatedData['redirect'],
+            'footer' => $validatedData['footer'],
+            'offer_id' => $offer_id
+        ]);
 
         $notification = array(
-            'message' => 'Froms Have been Added',
+            'message' => 'Tracking Lunks have been Added',
             'alert-type' => 'success'
         );
 
@@ -66,10 +61,10 @@ class FromController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\From  $from
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function show(From $from)
+    public function show(Link $link)
     {
         //
     }
@@ -77,48 +72,34 @@ class FromController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\From  $from
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, From $from)
+    public function edit(Link $link)
     {
         //
-        return view('admin.offers.froms.edit', [
-            'user' => $request->user(),
-            'from' => $from,
-        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\From  $from
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, From $from)
+    public function update(Request $request, Link $link)
     {
         //
-        $validatedData = $request->validate([
-            'froms' => 'required|min:5',
-        ]);
-    
-        $from->update($validatedData);
-
-        return redirect()->route('from.edit', ['from' => $from]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\From  $from
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function destroy(From $from)
+    public function destroy(Link $link)
     {
         //
-        $from->delete();
-
-        return redirect()->route('dashboard');
     }
 }

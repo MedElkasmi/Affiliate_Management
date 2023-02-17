@@ -29,6 +29,9 @@
                   <a class="nav-link" id="froms-tab" data-toggle="tab" href="#froms" role="tab" aria-controls="froms" aria-selected="false">Froms</a>
                </li>
                <li class="nav-item">
+                  <a class="nav-link" id="links-tab" data-toggle="tab" href="#links" role="tab" aria-controls="links" aria-selected="false">Tracking Links</a>
+               </li>
+               <li class="nav-item">
                   <a class="nav-link" id="creatives-tab" data-toggle="tab" href="#creatives" role="tab" aria-controls="creatives" aria-selected="false">Creatives</a>
                </li>
             </ul>
@@ -38,6 +41,9 @@
                </div>
                <div class="tab-pane fade" id="froms" role="tabpanel" aria-labelledby="froms-tab">
                   @include('admin.offers.froms.index')
+               </div>
+               <div class="tab-pane fade" id="links" role="tabpanel" aria-labelledby="links-tab">
+                  @include('admin.offers.links.create')
                </div>
                <div class="tab-pane fade" id="creatives" role="tabpanel" aria-labelledby="creatives-tab">
                   @include('admin.offers.creatives.index')

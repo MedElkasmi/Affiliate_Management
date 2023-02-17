@@ -40,7 +40,14 @@
                                  <td>1</td>
                                  <td>{{$from->froms}}</td>
                                  <td>{{$from->created_at}}</td>
-                                 <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
+                                 <td>
+                                    <a href="{{route('from.edit',[$from->id])}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
+                                    <form method="POST" action="{{ route('from.destroy', ['from' => $from->id]) }}">
+                                       @csrf
+                                       @method('DELETE')
+                                       <button class="btn btn-danger btn-sm" style="color: white">Remove</button>
+                                   </form>
+                                 </td>
                               </tr>
                            @endforeach
                         </tbody>

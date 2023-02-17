@@ -61,7 +61,7 @@ class SubjectController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('subject.create')->with($notification);
+        return redirect()->route('offer.edit',[$offer_id])->with($notification);
 
     }
 
@@ -85,6 +85,10 @@ class SubjectController extends Controller
     public function edit(Request $request, Subject $subject)
     {
         //
+        return view('admin.offers.subjects.edit', [
+            'user' => $request->user(),
+            'subject' => $subject,
+        ]);
 
     }
 
@@ -99,6 +103,13 @@ class SubjectController extends Controller
     public function update(Request $request, Subject $subject)
     {
         //
+        $validatedData = $request->validate([
+            'subjects' => 'required|min:5',
+        ]);
+    
+        $subject->update($validatedData);
+
+        return redirect()->route('subject.edit', ['subject' => $subject]);
     }
 
     /**
@@ -110,5 +121,8 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         //
+        $subject->delete();
+
+        return redirect()->route('dashboard');
     }
 }

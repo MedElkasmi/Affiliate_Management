@@ -91,9 +91,13 @@ class NetworkController extends Controller
      * @param  \App\Models\Network  $network
      * @return \Illuminate\Http\Response
      */
-    public function edit(Network $network)
+    public function edit(Request $request, Network $network)
     {
         //
+        return view('admin.networks.edit', [
+            'user' => $request->user(),
+            'network' => $network,
+        ]);
     }
 
     /**
@@ -106,6 +110,13 @@ class NetworkController extends Controller
     public function update(Request $request, Network $network)
     {
         //
+        $validatedData = $request->validate([
+            'network' => 'required|min:5',
+        ]);
+    
+        $network->update($validatedData);
+
+        return redirect()->route('network.index');
     }
 
     /**

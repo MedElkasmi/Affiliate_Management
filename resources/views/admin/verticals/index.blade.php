@@ -50,8 +50,7 @@
                                     <td>{{$vertical->vertical}}</td>
                                     <td>{{$vertical->created_at}}</td>
                                     <td>
-                                       <a href="" class="btn btn-primary btn-sm" style="color: white">Edit</a>
-                                       <a href="" class="btn btn-danger btn-sm" style="color: white">Remove</a>
+                                       <a href="{{route('vertical.edit',[$vertical])}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
                                     </td>
                                  </tr>
                                 @endforeach

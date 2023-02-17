@@ -122,6 +122,8 @@ class OfferController extends Controller
                 'user' => $request->user(),
                 'subjects' => $offer->subjects,
                 'froms' => $offer->froms,
+                'creatives' => $offer->creatives,
+                'links' => $offer->links,
                 'offers' => Offer::all(),
             ];
 

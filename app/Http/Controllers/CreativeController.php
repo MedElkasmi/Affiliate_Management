@@ -69,11 +69,11 @@ class CreativeController extends Controller
         $data->save();
 
         $notification = array(
-            'message' => 'Admin Profile Image Updated',
+            'message' => 'Creative Image Updated',
             'alert-type' => 'success'
         );
 
-        return redirect()->route('profile.edit')->with($notification);
+        return redirect()->route('offer.edit',[$offer_id])->with($notification);
     }
 
     /**
@@ -93,9 +93,13 @@ class CreativeController extends Controller
      * @param  \App\Models\Creative  $creative
      * @return \Illuminate\Http\Response
      */
-    public function edit(Creative $creative)
+    public function edit(Request $request, Creative $creative)
     {
         //
+        return view('admin.offers.creatives.edit', [
+            'user' => $request->user(),
+            'creative' => $creative,
+        ]);
     }
 
     /**
@@ -108,6 +112,15 @@ class CreativeController extends Controller
     public function update(Request $request, Creative $creative)
     {
         //
+        $validatedData = $request->validate([
+            'creative_name' => 'required',
+            'creative_image' => 'required',
+            'creative_footer' => 'required',
+        ]);
+    
+        $creative->update($validatedData);
+
+        return redirect()->route('creative.edit', ['creative' => $creative]);
     }
 
     /**
@@ -119,5 +132,8 @@ class CreativeController extends Controller
     public function destroy(Creative $creative)
     {
         //
+        $creative->delete();
+
+        return redirect()->route('creative.edit', ['creative' => $creative]);
     }
 }

@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('sid');
             $table->string('offer');
-            $table->longtext('redlink')->nullable();
-            $table->longtext('unsublink')->nullable();
             $table->string('description');
             $table->string('payout');
             $table->string('type');
