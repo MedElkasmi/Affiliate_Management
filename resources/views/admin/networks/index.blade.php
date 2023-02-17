@@ -40,7 +40,6 @@
                                    <th>Username</th>
                                    <th>APi Key</th>
                                    <th>Created Date</th>
-                                   <th>Visibility</th>
                                    <th>Action</th>
                                 </tr>
                              </thead>
@@ -56,10 +55,8 @@
                                     <td>{{$network->username}}</td>
                                     <td>{{$network->apikey}}</td>
                                     <td>{{$network->created_at}}</td>
-                                    <td><input type="checkbox" class="js-switch" checked /></td>
                                     <td>
-                                       <a href="" class="btn btn-primary btn-sm" style="color: white">Edit</a>
-                                       <a href="" class="btn btn-danger btn-sm" style="color: white">Remove</a>
+                                       <a href="{{route('network.edit',$network)}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
                                     </td>
                                  </tr>
                                 @endforeach

@@ -29,8 +29,9 @@
                      </p>
                      <div class="x_content">
                         <br />
-                        <form method="POST" action="{{route('from.store')}}" class="form-horizontal form-label-left">
+                        <form method="POST" action="{{route('from.update',[$from->id])}}" class="form-horizontal form-label-left">
                            @csrf
+                           @method('PUT')
 
                            <div class="form-group row">
                               <label class="control-label col-md-3 col-sm-3 ">Froms :

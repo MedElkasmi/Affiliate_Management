@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('creatives', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('creative_name');
-            $table->text('creative_image');
-            $table->text('creative_footer');
+            $table->longText('redirect');
+            $table->longText('footer');
             $table->unsignedBigInteger('offer_id');
             $table->foreign('offer_id')->references('id')->on('offers');
             $table->timestamps();
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('creatives');
+        Schema::dropIfExists('links');
     }
 };

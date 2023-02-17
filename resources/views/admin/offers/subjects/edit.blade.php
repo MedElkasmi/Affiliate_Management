@@ -4,7 +4,7 @@
    <div class="col-md-12 col-sm-12 ">
       <div class="x_panel">
          <div class="x_title">
-            <h2>List of Active Froms</h2>
+            <h2>List of Active Subjects</h2>
             <ul class="nav navbar-right panel_toolbox">
                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                </li>
@@ -29,14 +29,16 @@
                      </p>
                      <div class="x_content">
                         <br />
-                        <form method="POST" action="{{route('from.store')}}" class="form-horizontal form-label-left">
+                        <form method="POST" action="{{route('subject.update',$subject->id)}}" class="form-horizontal form-label-left">
                            @csrf
+                           @method('PUT')
+
 
                            <div class="form-group row">
-                              <label class="control-label col-md-3 col-sm-3 ">Froms :
+                              <label class="control-label col-md-3 col-sm-3 ">Subjects :
                               </label>
                               <div class="col-md-8 col-sm-8 ">
-                                 <textarea class="form-control" rows="3" name="froms"></textarea>
+                                 <textarea class="form-control" rows="3" name="subjects"></textarea>
                               </div>
                            </div>
 

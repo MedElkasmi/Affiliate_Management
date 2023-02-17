@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Offer;
 
-class Creative extends Model
+class Link extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,4 @@ class Creative extends Model
         
         return $this->belongsTo(Offer::class);
     }
-
-    
 }

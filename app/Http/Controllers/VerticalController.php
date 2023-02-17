@@ -81,9 +81,13 @@ class VerticalController extends Controller
      * @param  \App\Models\Vertical  $vertical
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vertical $vertical)
+    public function edit(Request $request, Vertical $vertical)
     {
         //
+        return view('admin.verticals.edit', [
+            'user' => $request->user(),
+            'vertical' => $vertical,
+        ]);
     }
 
     /**
@@ -96,6 +100,13 @@ class VerticalController extends Controller
     public function update(Request $request, Vertical $vertical)
     {
         //
+        $validatedData = $request->validate([
+            'vertical' => 'required|min:5',
+        ]);
+    
+        $vertical->update($validatedData);
+
+        return redirect()->route('vertical.index');
     }
 
     /**
@@ -106,6 +117,6 @@ class VerticalController extends Controller
      */
     public function destroy(Vertical $vertical)
     {
-        //
+
     }
 }

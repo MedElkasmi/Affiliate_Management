@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
+use App\Models\Subject;
+use App\Models\From;
 use App\Models\Network;
 use App\Models\Vertical;
 use App\Models\Location;
@@ -15,10 +17,10 @@ class OfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $locations = $offer->locations;
+
     }
 
     /**
@@ -31,12 +33,10 @@ class OfferController extends Controller
         //
         try {
 
-            $offer = Offer::find(5);
             $data = [
                 'user' => $request->user(),
                 'networks' => Network::all(),
                 'verticals' => Vertical::all(),
-                'locations' => $offer->locations,
             ];
         
             return view('admin.offers.create', $data);
@@ -65,38 +65,34 @@ class OfferController extends Controller
                 'payout' => 'required|numeric',
                 'vertical_id' => 'required',
                 'type' => 'required',
-                'geos.*' => 'required'
+                'geos' => 'required'
             ]);
         
-            $offerData = $validatedData + [
-                
-            'offer' => $validatedData['offer'], 
-            'sid' => $validatedData['sid'], 
-            'network_id' => $validatedData['network'], 
-            'description' => $validatedData['desc'], 
-            'payout' => $validatedData['payout'], 
-            'vertical_id' => $validatedData['vertical'], 
-            'type' => $validatedData['iCheck']
-        ];
+            $offer = new Offer;
+            $offer->offer = $validatedData['offer'];
+            $offer->sid = $validatedData['sid'];
+            $offer->network_id = $validatedData['network_id'];
+            $offer->description = $validatedData['description'];
+            $offer->payout = $validatedData['payout'];
+            $offer->vertical_id = $validatedData['vertical_id'];
+            $offer->type = $validatedData['type'];
+            $offer->save();
+        
+            $valid_geos = $validatedData['geos'];
 
-            $offer = Offer::create($offerData);
-        
-            $locationData = [];
-            foreach ($validatedData['geos'] as $geo) {
-                $locationData[] = [
-                    'offer_id' => $offer->id,
-                    'geo' => $geo
-                ];
+            foreach ($valid_geos as $geo) {
+                $location = new Location;
+                $location->offer_id = $offer->id;
+                $location->geo = $geo;
+                $location->save();
             }
-        
-            Location::insert($locationData);
 
             $notification = array(
                 'message' => 'New Offer Has been Added',
                 'alert-type' => 'success'
             );
 
-            return redirect()->route('offer.create')->with($notification);
+            return redirect()->route('dashboard')->with($notification);
         }
             
 
@@ -117,9 +113,28 @@ class OfferController extends Controller
      * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Offer $offer)
+    public function edit(Offer $offer, Request $request)
     {
-        //
+        // 'subjects' => $offer->subjects, to call all related subject with given offer
+        try {
+
+            $data = [
+                'user' => $request->user(),
+                'subjects' => $offer->subjects,
+                'froms' => $offer->froms,
+                'creatives' => $offer->creatives,
+                'links' => $offer->links,
+                'offers' => Offer::all(),
+            ];
+
+            session(['offer' => $offer->id]);
+        
+            return view('admin.offers.edit', $data);
+        } 
+        
+        catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred while loading the data. Please try again later.');
+        } 
     }
 
     /**

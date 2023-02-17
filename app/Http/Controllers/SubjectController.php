@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+use App\Models\Offer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -39,6 +41,28 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'subjects' => 'required',
+        ]);
+
+        $offer_id = session('offer');
+        $subjects = $validatedData['subjects'];
+        $subjects_list = explode("\n", $subjects);
+
+        foreach($subjects_list as $subject ) {
+            $offersubject = new Subject;
+            $offersubject->offer_id = $offer_id;
+            $offersubject->subjects = $subject;
+            $offersubject->save();
+        }
+
+        $notification = array(
+            'message' => 'Subjects Have been Added',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('offer.edit',[$offer_id])->with($notification);
+
     }
 
     /**
@@ -58,10 +82,16 @@ class SubjectController extends Controller
      * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit(Request $request, Subject $subject)
     {
         //
+        return view('admin.offers.subjects.edit', [
+            'user' => $request->user(),
+            'subject' => $subject,
+        ]);
+
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -73,6 +103,13 @@ class SubjectController extends Controller
     public function update(Request $request, Subject $subject)
     {
         //
+        $validatedData = $request->validate([
+            'subjects' => 'required|min:5',
+        ]);
+    
+        $subject->update($validatedData);
+
+        return redirect()->route('subject.edit', ['subject' => $subject]);
     }
 
     /**
@@ -84,5 +121,8 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         //
+        $subject->delete();
+
+        return redirect()->route('dashboard');
     }
 }

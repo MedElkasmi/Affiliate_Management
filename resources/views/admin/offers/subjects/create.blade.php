@@ -27,20 +27,30 @@
                      <p class="text-muted font-13 m-b-30">
                        Add your list
                      </p>
-                     <form>
+                     <div class="x_content">
+                        <br />
+                        <form method="POST" action="{{route('subject.store')}}" class="form-horizontal form-label-left">
+                           @csrf
 
-                        <div class="item form-group">
-                            <div class="col-md-12 col-sm-12">
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <div class="col-md-2 col-sm-2">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </div>
-                    
-                    </form>
+
+                           <div class="form-group row">
+                              <label class="control-label col-md-3 col-sm-3 ">Subjects :
+                              </label>
+                              <div class="col-md-8 col-sm-8 ">
+                                 <textarea class="form-control" rows="3" name="subjects"></textarea>
+                              </div>
+                           </div>
+
+                           <div class="ln_solid"></div>
+                           <div class="form-group">
+                              <div class="col-md-9 col-sm-9  offset-md-3">
+                                 <button type="button" class="btn btn-primary">Back</button>
+                                 <button type="submit" class="btn btn-success">Submit</button>
+                              </div>
+                           </div>
+
+                        </form>
+                     </div>
                   </div>
                </div>
             </div>

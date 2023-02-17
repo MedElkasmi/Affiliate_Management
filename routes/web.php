@@ -8,6 +8,7 @@ use App\Http\Controllers\VerticalController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\FromController;
 use App\Http\Controllers\CreativeController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('vertical', VerticalController::class);
     Route::resource('subject', SubjectController::class);
     Route::resource('from', FromController::class);
+    Route::resource('link', LinkController::class);
     Route::resource('creative', CreativeController::class);
     Route::resource('team', TeamController::class);
 });

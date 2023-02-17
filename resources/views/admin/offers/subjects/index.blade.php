@@ -35,18 +35,21 @@
                             </tr>
                          </thead>
                          <tbody>
-                            <tr>
-                               <td>1</td>
-                               <td>test</td>
-                               <td>01/01/2023 Architect</td>
-                               <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
-                            </tr>
-                            <tr>
+                           @foreach ($subjects as $subject)
+                           <tr>
                               <td>1</td>
-                              <td>test</td>
-                              <td>01/01/2023 Architect</td>
-                              <td><input style=" margin-right:10px;" type="checkbox" class="js-switch" checked /></td>
+                              <td>{{$subject->subjects}}</td>
+                              <td>{{$subject->created_at}}</td>
+                              <td>
+                                 <a href="{{route('subject.edit',[$subject->id])}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
+                                 <form method="POST" action="{{ route('subject.destroy', ['subject' => $subject->id]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" style="color: white">Remove</button>
+                                </form>
+                              </td>
                            </tr>
+                           @endforeach
                          </tbody>
                       </table>
                    </div>

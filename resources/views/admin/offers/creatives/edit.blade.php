@@ -22,13 +22,15 @@
          </div>
             <div class="x_content">
                <br />
-               <form method="POST" action="{{route('creative.store')}}" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+               <form method="POST" action="{{route('creative.update',$creative)}}" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
                   @csrf
+                  @method('PUT')
+                  
                   <div class="item form-group">
                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Creative Name <span class="required">*</span>
                      </label>
                      <div class="col-md-6 col-sm-6 ">
-                        <input type="text" name="creative_name" required="required" class="form-control">
+                        <input type="text" name="creative_name" class="form-control" value="{{$creative->creative_name}}">
                      </div>
                   </div>
                   <div class="item form-group">
