@@ -35,11 +35,6 @@
                      <div class="caption">
                         <p><strong>{{$asset->creative_name}}</strong></p>
                      </div>
-                     <form method="POST" action="{{ route('creative.destroy', $asset) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button><i class="fa fa-times"></i>Remove</button>
-                    </form>
                   </div>
                </div>
                @endforeach
