@@ -69,7 +69,7 @@ class CreativeController extends Controller
         $data->save();
 
         $notification = array(
-            'message' => 'Creative Image Updated',
+            'message' => 'Creative Image Added',
             'alert-type' => 'success'
         );
 
@@ -109,18 +109,49 @@ class CreativeController extends Controller
      * @param  \App\Models\Creative  $creative
      * @return \Illuminate\Http\Response
      */
+
+    const RANDOM_STRING_LENGTH = 20;
     public function update(Request $request, Creative $creative)
     {
-        //
-        $validatedData = $request->validate([
-            'creative_name' => 'required',
-            'creative_image' => 'required',
-            'creative_footer' => 'required',
-        ]);
-    
-        $creative->update($validatedData);
+        try {
+            $validatedData = $request->validate([
+                'creative_name' => 'required',
+                'creative_image' => 'required',
+                'creative_footer' => 'required',
+            ]);
 
-        return redirect()->route('creative.edit', ['creative' => $creative]);
+            $creative_image = $request->file('creative_image');
+            $creative_footer = $request->file('creative_footer');
+
+            $creative_path = Str::random(self::RANDOM_STRING_LENGTH) . $creative_image->getClientOriginalName();
+            $creative_image->move(public_path('upload/creatives'), $creative_path);
+
+            $footer_path = Str::random(self::RANDOM_STRING_LENGTH) . $creative_footer->getClientOriginalName();
+            $creative_footer->move(public_path('upload/footers'), $footer_path);
+
+            $creative->update([
+                'creative_name' => $validatedData['creative_name'],
+                'creative_image' => $creative_path,
+                'creative_footer' => $footer_path
+            ]);
+
+            $notification = [
+                'message' => 'creative image updated',
+                'alert-type' => 'success'
+            ];
+
+            return redirect()->route('creative.edit', ['creative' => $creative])->with($notification);
+
+        } catch (\Exception $e) {
+            // Handle the error
+
+            $notification = [
+                'message' => 'Something Went Wrong!!',
+                'alert-type' => 'danger'
+            ];
+
+            return redirect()->route('creative.edit', ['creative' => $creative])->with($notification);
+        }
     }
 
     /**

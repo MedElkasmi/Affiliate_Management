@@ -37,7 +37,7 @@
                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Template <span class="required">*</span>
                      </label>
                      <div class="col-md-6 col-sm-6 ">
-                        <input type="file" name="creative" required="required" class="form-control">
+                        <input type="file" name="creative_image" required="required" class="form-control">
                      </div>
                   </div>
                   <div class="item form-group">
@@ -45,7 +45,7 @@
 
                      </label>
                      <div class="col-md-6 col-sm-6 ">
-                        <input type="file" name="footer" class="form-control">
+                        <input type="file" name="creative_footer" class="form-control">
                      </div>
                   </div>
                   <div class="ln_solid"></div>

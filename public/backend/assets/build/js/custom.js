@@ -5037,3 +5037,28 @@ $(document).ready(function () {
     init_autocomplete();
 
 });	
+
+
+$(document).ready(function() {
+    $('.js-switch').on('change', function(e) {
+        var offerId = $(this).data('offer-id');
+        var status = this.checked ? 'active' : 'inactive';
+
+        $.ajax({
+            url: '{{ route("offer.update-status") }}',
+            type: 'POST',
+            data: {
+                offerId: offerId,
+                status: status
+            },
+            dataType: 'json',
+            success: function (response) {
+                // Handle success response
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+            }
+        });
+    });
+});
+
