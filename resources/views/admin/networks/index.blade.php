@@ -55,7 +55,7 @@
                                     <td>{{$network->username}}</td>
                                     <td>{{$network->apikey}}</td>
                                     <td>{{$network->created_at}}</td>
-                                    <td>
+                                    <td width="10%">
                                        <a href="{{route('network.edit',$network)}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
                                     </td>
                                  </tr>

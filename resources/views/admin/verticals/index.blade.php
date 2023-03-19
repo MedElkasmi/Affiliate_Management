@@ -48,8 +48,8 @@
                                 <tr>
                                     <td>{{$i++}}</td>
                                     <td>{{$vertical->vertical}}</td>
-                                    <td>{{$vertical->created_at}}</td>
-                                    <td>
+                                    <td width="15%">{{$vertical->created_at}}</td>
+                                    <td width="10%">
                                        <a href="{{route('vertical.edit',[$vertical])}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
                                     </td>
                                  </tr>

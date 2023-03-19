@@ -22,7 +22,7 @@
              <div class="row">
                 <div class="col-sm-12">
                    <div class="card-box table-responsive">
-                      <p class="text-muted font-13 m-b-30">
+                      <p class="text-muted font-13 m-b-30" style="display: flex;justify-content: flex-end;">
                         <a href="{{route('from.create')}}" class="btn btn-success btn-sm" style="color: white">Add New from</a>
                       </p>
                       <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -31,22 +31,25 @@
                               <th>ID</th>
                               <th>Subject</th>
                               <th>Added</th>
-                              <th>Status</th>
+                              <th>Action</th>
                            </tr>
                         </thead>
                         <tbody>
+                           @php $i=1; @endphp
                            @foreach ($froms as $from)
                               <tr>
-                                 <td>1</td>
+                                 <td width="10%">{{$i++}}</td>
                                  <td>{{$from->froms}}</td>
-                                 <td>{{$from->created_at}}</td>
-                                 <td>
-                                    <a href="{{route('from.edit',[$from->id])}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
-                                    <form method="POST" action="{{ route('from.destroy', ['from' => $from->id]) }}">
-                                       @csrf
-                                       @method('DELETE')
-                                       <button class="btn btn-danger btn-sm" style="color: white">Remove</button>
-                                   </form>
+                                 <td width="15%">{{$from->created_at}}</td>
+                                 <td width="10%">
+                                    <div style="display:flex;justify-content: center;">
+                                       <a href="{{route('from.edit',[$from->id])}}" class="btn btn-primary btn-sm" style="color: white">Edit</a>
+                                       <form method="POST" action="{{ route('from.destroy', ['from' => $from->id]) }}">
+                                          @csrf
+                                          @method('DELETE')
+                                          <button class="btn btn-danger btn-sm" style="color: white">Remove</button>
+                                      </form>
+                                    </div>
                                  </td>
                               </tr>
                            @endforeach

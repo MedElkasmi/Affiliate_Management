@@ -18,7 +18,9 @@
              </ul>
              <div class="clearfix"></div>
           </div>
-          <a href="{{route('creative.create')}}" class="btn btn-success btn-sm" style="color: white">Add New Creative</a>
+          <div style="display: flex;justify-content: flex-end;">
+            <a href="{{route('creative.create')}}" class="btn btn-success btn-sm" style="color: white">Add New Creative</a>
+          </div>
           <div class="x_content">
              <div class="row">
                @foreach ($creatives as $asset)
