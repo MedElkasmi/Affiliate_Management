@@ -147,6 +147,7 @@ class OfferController extends Controller
     public function update(Request $request, Offer $offer)
     {
         //
+
     }
 
     /**
@@ -159,4 +160,22 @@ class OfferController extends Controller
     {
         //
     }
+
+    public function updateStatus(Request $request) {
+        
+    $offerId = $request->input('offerId');
+    $status = $request->input('status');
+
+    // Update offer status in database
+    $offer = Offer::findOrFail($offerId);
+    $offer->status = $status;
+    $offer->save();
+
+    // Return response
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Offer status updated successfully.'
+    ]);
+}
+
 }
