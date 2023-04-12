@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('network_id');
             $table->foreign('vertical_id')->references('id')->on('verticals');
             $table->foreign('network_id')->references('id')->on('networks');
-            table->string('status');
+            $table->string('status');
             $table->timestamps();
         });
     }

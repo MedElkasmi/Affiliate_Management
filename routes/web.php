@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('offer', OfferController::class);
     Route::post('/offer/update-status', [OfferController::class, 'updateStatus'])->name('offer.update-status');
+    Route::post('/offer/get-offer', [OfferController::class, 'getOffer'])->name('offer.get-offer');
     Route::resource('network', NetworkController::class);
     Route::resource('vertical', VerticalController::class);
     Route::resource('subject', SubjectController::class);

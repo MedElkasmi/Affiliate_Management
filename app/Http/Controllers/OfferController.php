@@ -10,6 +10,10 @@ use App\Models\Vertical;
 use App\Models\Location;
 use Illuminate\Http\Request;
 
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+
 class OfferController extends Controller
 {
     /**
@@ -54,46 +58,74 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
  
-        public function store(Request $request)
-        {
+    public function store(Request $request)
+    {
 
-            $validatedData = $request->validate([
-                'offer' => 'required',
-                'sid' => 'required',
-                'network_id' => 'required',
-                'description' => 'required',
-                'payout' => 'required|numeric',
-                'vertical_id' => 'required',
-                'type' => 'required',
-                'geos' => 'required'
-            ]);
-        
-            $offer = new Offer;
-            $offer->offer = $validatedData['offer'];
-            $offer->sid = $validatedData['sid'];
-            $offer->network_id = $validatedData['network_id'];
-            $offer->description = $validatedData['description'];
-            $offer->payout = $validatedData['payout'];
-            $offer->vertical_id = $validatedData['vertical_id'];
-            $offer->type = $validatedData['type'];
-            $offer->save();
-        
-            $valid_geos = $validatedData['geos'];
+        $validatedData = $request->validate([
+            'offer' => 'required',
+            'sid' => 'required',
+            'network_id' => 'required',
+            'description' => 'required',
+            'payout' => 'required|numeric',
+            'vertical_id' => 'required',
+            'type' => 'required',
+            'geos' => 'required'
+        ]);
+    
+        $offer = new Offer;
+        $offer->offer = $validatedData['offer'];
+        $offer->sid = $validatedData['sid'];
+        $offer->network_id = $validatedData['network_id'];
+        $offer->description = $validatedData['description'];
+        $offer->payout = $validatedData['payout'];
+        $offer->vertical_id = $validatedData['vertical_id'];
+        $offer->type = $validatedData['type'];
+        $offer->status = 'Active';
+        $offer->save();
+    
+        $valid_geos = $validatedData['geos'];
 
-            foreach ($valid_geos as $geo) {
-                $location = new Location;
-                $location->offer_id = $offer->id;
-                $location->geo = $geo;
-                $location->save();
-            }
-
-            $notification = array(
-                'message' => 'New Offer Has been Added',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->route('dashboard')->with($notification);
+        foreach ($valid_geos as $geo) {
+            $location = new Location;
+            $location->offer_id = $offer->id;
+            $location->geo = $geo;
+            $location->save();
         }
+
+        $notification = array(
+            'message' => 'New Offer Has been Added',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('dashboard')->with($notification);
+    }
+
+    public function getOffer(Request $request){
+
+        $this->validate($request, [
+            'offer_id' => 'required|numeric',
+            'network_id' => 'required|numeric',
+        ]);
+
+        $endpoint = 'https://api.eflow.team/v1/affiliates/offers/'. $request->offer_id;
+
+        $apikey = Network::get_apikey($request->network_id);
+        
+        $response = Http::withHeaders([
+            "X-Eflow-API-Key" => $apikey,
+        ])->get($endpoint);
+
+        $responseBody = json_decode($response, true);
+
+        $data = [
+            'user' => $request->user(),
+            'networks' => Network::all(),
+            'verticals' => Vertical::all(),
+            'responseBody' => $responseBody,
+        ];
+
+        return view('admin.offers.create', $data);
+    }
             
 
     /**
