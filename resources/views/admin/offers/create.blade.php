@@ -51,15 +51,107 @@
                               <div class="clearfix"></div>
                            </div>
                            <div class="x_content">
+                              <form method="post" action="{{ route('offer.get-offer') }}">
+                                 @csrf
+                                 <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">Offer ID</label>
+                                    <div class="col-md-6 col-sm-6">
+                                       <input type="text" required="required" name="offer_id" class="form-control">
+                                    </div>
+                                 </div>
+                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 label-align">Select Network</label>
+                                    <div class="col-md-6 col-sm-6">
+                                       <select class="form-control" name="network_id">
+                                          <option disabled selected hidden>Select your option</option>
+                                          @foreach ($networks as $network)
+                                             <option value="{{ $network->id }}">{{ $network->network }}</option>
+                                          @endforeach
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="item form-group">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                       <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                 </div>
+                              </form>
+                              <br />
+                              <hr>
                               <br />
                               <form method="post" action="{{ route('offer.store') }}">
                                  @csrf
 
+                                 @if(isset($responseBody)) 
+                                    <div class="item form-group">
+                                       <label class="col-form-label col-md-3 col-sm-3 label-align">Offer Name </label>
+                                       <div class="col-md-6 col-sm-6">
+                                          <input type="text" required="required" name="offer" class="form-control" value="{{$responseBody['name']}}">
+                                       </div>
+   
+                                    </div>
+                                    <div class="item form-group">
+                                       <label class="col-form-label col-md-3 col-sm-3 label-align">Offer ID</label>
+                                       <div class="col-md-6 col-sm-6">
+                                          <input type="text" required="required" name="sid" class="form-control" value="{{$responseBody['network_offer_id']}}">
+                                       </div>
+                                    </div>
+                                    <div class="item form-group">
+                                       <label class="control-label col-md-3 col-sm-3 label-align">Select Network</label>
+                                       <div class="col-md-6 col-sm-6">
+                                          <select class="form-control" name="network_id">
+                                             <option disabled selected hidden>Select your option</option>
+                                             @foreach ($networks as $network)
+                                                <option value="{{ $network->id }}">{{ $network->network }}</option>
+                                             @endforeach
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="item form-group">
+                                       <label class="control-label col-md-3 col-sm-3 label-align">Descripton / Restriction</label>
+                                       <div class="col-md-6 col-sm-6">
+                                          <textarea class="form-control" rows="3" name="description">
+                                             {{$responseBody['html_description']}}
+                                          </textarea>
+                                       </div>
+                                    </div>
+                                    <div class="item form-group">
+                                       <label class="col-form-label col-md-3 col-sm-3 label-align">Payout</label>
+                                       <div class="col-md-6 col-sm-6">
+                                          <input type="text"required="required" class="form-control" name="payout" value="{{$responseBody['relationship']['payouts']['entries'][0]['payout_amount']}}">
+                                       </div>
+                                    </div>
+                                    <div class="item form-group">
+                                       <label class="control-label col-md-3 col-sm-3 label-align">Select Vertical</label>
+                                       <div class="col-md-6 col-sm-6">
+                                          <select class="form-control" name="vertical_id">
+                                             <option disabled selected hidden>Select your option</option>
+                                             @foreach ($verticals as $vertical)
+                                                <option value="{{ $vertical->id }}">{{ $vertical->vertical }}</option>
+                                           @endforeach
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="item form-group">
+                                       <label class="control-label col-md-3 col-sm-3 label-align">GEOs</label>
+                                       <div class="col-md-6 col-sm-6">
+                                          
+                                          <input id="tags_1" type="text" class="tags form-control" name="geos[]"/  value="
+                                          @for ($i = 0; $i < count($responseBody['relationship']['ruleset']['countries']); $i++)
+                                            {{$responseBody['relationship']['ruleset']['countries'][$i]['country_code'] .','}} 
+                                          @endfor
+                                          ">
+                                          
+                                          <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                                       </div>
+                                    </div>
+                                 @else
                                  <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align">Offer Name</label>
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">Offer Name </label>
                                     <div class="col-md-6 col-sm-6">
                                        <input type="text" required="required" name="offer" class="form-control">
                                     </div>
+
                                  </div>
                                  <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Offer ID</label>
@@ -104,10 +196,16 @@
                                  <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 label-align">GEOs</label>
                                     <div class="col-md-6 col-sm-6">
+
                                        <input id="tags_1" type="text" class="tags form-control" name="geos[]"/>
                                        <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
                                     </div>
                                  </div>
+                                 
+
+                                 @endif
+
+
                                  <div class="form-group row">
                                     <label class="control-label col-md-3 col-sm-3 label-align">Offer Type</label>
                                     <div class="col-md-6 col-sm-6">
@@ -118,6 +216,8 @@
                                        </div>
                                     </div>
                                  </div>
+
+                                 
                                  <div class="ln_solid"></div>
                                  <div class="item form-group">
                                     <div class="col-md-6 col-sm-6 offset-md-3">

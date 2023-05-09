@@ -16,4 +16,8 @@ class Network extends Model
         
         return $this->hasOne(Offer::class);
     }
+
+    static public function get_apikey($network_id){
+        return Network::WhereRaw('id = ?', [$network_id])->first('apikey')->apikey;
+    }
 }
